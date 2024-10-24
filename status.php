@@ -5,7 +5,7 @@ if(!$conn){
     echo "Connection failed ". mysqli_connect_error();
 }
 
-$sql = "SELECT studentName, matricNo, deptPgComment, hod_comment FROM students where deptPgComment is NOT NULL ";
+$sql = "SELECT studentName, matricNo, deptPgComment, hod_comment, college_rep_comment FROM students where deptPgComment is NOT NULL ";
 $result = mysqli_query($conn, $sql);
 $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -98,7 +98,7 @@ $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
         //update the content of the cells 
         nameCell.textContent = name;
         hodCell.innerHTML = hod? "<span class=\"txt\">Endorsed<span>" : "<span class=\"danger\">Pending</span>";
-        collegeRepCell.textContent = collegeRep;
+        collegeRepCell.innerHTML = collegeRep? "<span class=\"txt\">Endorsed<span>" : "<span class=\"danger\">Pending</span>";
         collegeDeanCell.textContent = collegeDean;
         subDeanCell.textContent = subDean;
         deanCell.textContent = dean;
@@ -111,7 +111,7 @@ $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 
     students.forEach((student)=>{
-        updateTable(student.studentName, student.hod_comment,"","","","");        
+        updateTable(student.studentName, student.hod_comment, student.college_rep_comment,"","","");        
     })
 </script>
 </body>

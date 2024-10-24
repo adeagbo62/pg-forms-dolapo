@@ -20,7 +20,7 @@ echo $matricNo;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
     <style>
-        #hod-comment{
+        #collegeRepComment{
             width: 75%;
             height: 100px;
         }
@@ -36,7 +36,7 @@ echo $matricNo;
         .header{
     text-align: center;
 }
-.student-section, .departmental-pg, .hod-section{
+.student-section, .departmental-pg, .collegeRep-section{
     border: 2px solid purple;
     border-radius: 10px;
     padding-left: 3rem;
@@ -96,10 +96,17 @@ echo $matricNo;
             </div>
         </div>
         <div class="hod-section">
-            <h1>HOD comment section</h1>
+            <h1>HOD Comments</h1>
+            <div class="hod-comment">
+
+            </div>
+        </div>
+
+        <div class="collegeRep-section">
+            <h1>College Representative comment section</h1>
             <form action="">
-                <label for="hod-comment">Enter your comment </label><br>
-                <textarea name="hod-comment" id="hod-comment" placeholder="type here..."></textarea>
+                <label for="collegeRep-comment">Enter your comment </label><br>
+                <textarea name="collegeRepComment" id="collegeRepComment" placeholder="type here..."></textarea>
             </form>
             <div class="submit">Submit</div>
         </div>
@@ -114,6 +121,7 @@ echo $matricNo;
         const programme = document.querySelector(".programme");
         const college = document.querySelector(".college");
         const departmentalPg = document.querySelector(".departmental-pg-comment");
+        const hodComment = document.querySelector(".hod-comment");
         const getStudent = async()=>{
             const response = await fetch(`getPgCommentt.php?studentId=${studentId}`);
             const student = await response.json();
@@ -124,20 +132,21 @@ echo $matricNo;
             programme.textContent = student.programme;
             college.textContent = student.college;
             departmentalPg.textContent = student.deptPgComment;
+            hodComment.textContent = student.hod_comment;
         }
         getStudent();
 
     const submitBtn = document.querySelector(".submit");
     submitBtn.addEventListener("click", async function(){
-        const hodComment = document.querySelector("#hod-comment").value;
+        const collegeRepComment = document.querySelector("#collegeRepComment").value;
         try{
-            const response = await fetch("submitHod.php", {
+            const response = await fetch("submitCollegeRep.php", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                hodComment: hodComment,
+                collegeRepComment: collegeRepComment,
                 studentId: studentId
             })
         });
@@ -152,7 +161,7 @@ echo $matricNo;
         alert('An error occurred while updating.');
     }
     
-    window.location.href = `hodPage.php`
+    window.location.href = `collegeRep.php`
     })
     </script>
 </body>

@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inputData = json_decode(file_get_contents('php://input'), true);
     
     // Validate input data
-    if (isset($inputData['hodComment']) && isset($inputData['studentId'])) {
-        $hodComment = $inputData['hodComment'];
+    if (isset($inputData['collegeRepComment']) && isset($inputData['studentId'])) {
+        $collegeRepComment = $inputData['collegeRepComment'];
         $matricNo = $inputData['studentId']; // studentId is actually the matricNo
 
         // Database connection using mysqli
@@ -29,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             // Prepare the SQL query to update HOD comment
-            $updateSql = "UPDATE students SET hod_comment = ? WHERE matricNo = ?";
+            $updateSql = "UPDATE students SET college_rep_comment = ? WHERE matricNo = ?";
 
             // Prepare statement for updating HOD comment
             if ($stmt = $conn->prepare($updateSql)) {
                 // Bind parameters to the SQL query
-                $stmt->bind_param("ss", $hodComment, $matricNo); // Bind matricNo as a string
+                $stmt->bind_param("ss", $collegeRepComment, $matricNo); // Bind matricNo as a string
 
                 // Execute the query
                 if (!$stmt->execute()) {
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Insert matricNo into the endorsements table
-            $endorseSql = "INSERT INTO endorsements (matricNo) VALUES (?)";
+            $endorseSql = "INSERT INTO college_rep_endorsements (matricNo) VALUES (?)";
             if ($stmt = $conn->prepare($endorseSql)) {
                 // Bind the matricNo parameter to the query
                 $stmt->bind_param("s", $matricNo);  // MatricNo is a string

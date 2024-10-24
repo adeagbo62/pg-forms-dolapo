@@ -10,8 +10,8 @@ if(!$conn){
 // Fetch unendorsed students
 $sql = "SELECT s.id, s.studentName, s.matricNo 
         FROM students s 
-        LEFT JOIN endorsements e ON s.matricNo = e.matricNo 
-        WHERE s.deptPgComment IS NOT NULL AND e.matricNo IS NULL";
+        LEFT JOIN college_rep_endorsements e ON s.matricNo = e.matricNo 
+        WHERE s.hod_comment IS NOT NULL AND e.matricNo IS NULL";
 $result = mysqli_query($conn, $sql);
 $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //echo json_encode($students);
@@ -71,15 +71,15 @@ mysqli_close($conn);
             transform: scale(0.99);
         }
     </style>
-    <title>HOD - Homepage</title>
+    <title>College Representative - Homepage</title>
 </head>
 <body>
     <div class="header-1">
         <img src="image/covenant-university-logo-desktop.png" alt="">
-        <h1>Consent and Quality Attestation Form (FORM N) - HOD</h1>                
+        <h1>Consent and Quality Attestation Form (FORM N) - College Representative</h1>                
     </div>
     <section>
-        <h1>Welcome, <span id="hod"><i>Dr. Bola Ahmed Tinubu</i></span></h1>
+        <h1>Welcome, <span id="hod"><i>Dr. Chinedu Zachary Chijioke</i></span></h1>
         <div class="student-div">
             <h2><u>Pending(<span id="num"></span>)</u></h2>
             <div class="student-section">
@@ -140,7 +140,7 @@ mysqli_close($conn);
                 console.log(studentId);
                 
                 localStorage.setItem("studentId", studentId);
-                window.location.href = `hod.php?id=${studentId}`;
+                window.location.href = `collegeRepPage.php?id=${studentId}`;
             });
         })
 
