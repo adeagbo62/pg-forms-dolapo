@@ -20,7 +20,7 @@ echo $matricNo;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
     <style>
-        #collegeDeanComment{
+        #deanComment{
             width: 75%;
             height: 100px;
         }
@@ -107,13 +107,25 @@ echo $matricNo;
 
             </div>
         </div>
+        <div class="collegeDean-section">
+            <h1>College Dean Comments</h1>
+            <div class="collegeDean-comment">
+
+            </div>
+        </div>
+        <div class="subDean-section">
+            <h1>Sub Dean Comments</h1>
+            <div class="subDean-comment">
+
+            </div>
+        </div>
 
         
-        <div class="collegeDean-section">
-            <h1>College Dean comment section</h1>
+        <div class="dean-section">
+            <h1> Dean (SPS) comment section</h1>
             <form action="">
-                <label for="collegeDean-comment">Enter your comment </label><br>
-                <textarea name="collegeDeanComment" id="collegeDeanComment" placeholder="type here..."></textarea>
+                <label for="dean-comment">Enter your comment </label><br>
+                <textarea name="deanComment" id="deanComment" placeholder="type here..."></textarea>
             </form>
             <div class="submit">Submit</div>
         </div>
@@ -129,7 +141,9 @@ echo $matricNo;
         const college = document.querySelector(".college");
         const departmentalPg = document.querySelector(".departmental-pg-comment");
         const hodComment = document.querySelector(".hod-comment");
-        const collegeRepComment = document.querySelector(".collegeRep-comment")
+        const collegeRepComment = document.querySelector(".collegeRep-comment");
+        const collegeDeanComment = document.querySelector(".collegeDean-comment");
+        const subDeanComment = document.querySelector(".subDean-comment");
         const getStudent = async()=>{
             const response = await fetch(`getPgCommentt.php?studentId=${studentId}`);
             const student = await response.json();
@@ -142,20 +156,22 @@ echo $matricNo;
             departmentalPg.textContent = student.deptPgComment;
             hodComment.textContent = student.hod_comment;
             collegeRepComment.textContent = student.college_rep_comment;
+            collegeDeanComment.textContent = student.college_dean_comment;
+            subDeanComment.textContent = student.sub_dean_comment;
         }
         getStudent();
 
     const submitBtn = document.querySelector(".submit");
     submitBtn.addEventListener("click", async function(){
-        const collegeDeanComment = document.querySelector("#collegeDeanComment").value;
+        const deanComment = document.querySelector("#deanComment").value;
         try{
-            const response = await fetch("submitCollegeDean.php", {
+            const response = await fetch("submitDean.php", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                collegeDeanComment: collegeDeanComment,
+                deanComment: deanComment,
                 studentId: studentId
             })
         });
@@ -170,7 +186,7 @@ echo $matricNo;
         alert('An error occurred while updating.');
     }
     
-    window.location.href = `collegeDean.php`
+    window.location.href = `dean.php`
     })
     </script>
 </body>

@@ -6,8 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $inputData = json_decode(file_get_contents('php://input'), true);
     
     // Validate input data
-    if (isset($inputData['collegeDeanComment']) && isset($inputData['studentId'])) {
-        $collegeDeanComment = $inputData['collegeDeanComment'];
+    if (isset($inputData['deanComment']) && isset($inputData['studentId'])) {
+        $deanComment = $inputData['deanComment'];
         $matricNo = $inputData['studentId']; // studentId is actually the matricNo
 
         // Database connection using mysqli
@@ -29,26 +29,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         try {
             // Prepare the SQL query to update HOD comment
-            $updateSql = "UPDATE students SET college_dean_comment = ? WHERE matricNo = ?";
+            $updateSql = "UPDATE students SET dean_comment = ? WHERE matricNo = ?";
 
             // Prepare statement for updating HOD comment
             if ($stmt = $conn->prepare($updateSql)) {
                 // Bind parameters to the SQL query
-                $stmt->bind_param("ss", $collegeDeanComment, $matricNo); // Bind matricNo as a string
+                $stmt->bind_param("ss", $deanComment, $matricNo); // Bind matricNo as a string
 
                 // Execute the query
                 if (!$stmt->execute()) {
-                    throw new Exception('Failed to update College Dean comment.');
+                    throw new Exception('Failed to update dean sps comment.');
                 } 
 
                 // Close the statement
                 $stmt->close();
             } else {
-                throw new Exception('Failed to prepare the SQL query for COllege Dean comment.');
+                throw new Exception('Failed to prepare the SQL query for dean sps comment.');
             }
 
             // Insert matricNo into the endorsements table
-            $endorseSql = "INSERT INTO college_dean_endorsements (matricNo) VALUES (?)";
+            $endorseSql = "INSERT INTO dean_endorsements (matricNo) VALUES (?)";
             if ($stmt = $conn->prepare($endorseSql)) {
                 // Bind the matricNo parameter to the query
                 $stmt->bind_param("s", $matricNo);  // MatricNo is a string

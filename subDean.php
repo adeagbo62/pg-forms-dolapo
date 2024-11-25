@@ -10,8 +10,8 @@ if(!$conn){
 // Fetch unendorsed students
 $sql = "SELECT s.id, s.studentName, s.matricNo 
         FROM students s 
-        LEFT JOIN college_dean_endorsements e ON s.matricNo = e.matricNo 
-        WHERE s.college_rep_comment IS NOT NULL AND e.matricNo IS NULL";
+        LEFT JOIN sub_dean_endorsements e ON s.matricNo = e.matricNo 
+        WHERE s.college_dean_comment IS NOT NULL AND e.matricNo IS NULL";
 $result = mysqli_query($conn, $sql);
 $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
 //echo json_encode($students);
@@ -76,10 +76,10 @@ mysqli_close($conn);
 <body>
     <div class="header-1">
         <img src="image/covenant-university-logo-desktop.png" alt="">
-        <h1>Consent and Quality Attestation Form (FORM N) - College Dean</h1>                
+        <h1>Consent and Quality Attestation Form (FORM N) - Sub Dean</h1>                
     </div>
     <section>
-        <h1>Welcome, <span id="hod"><i>Dr. Tobias Olawale Tokunbo</i></span></h1>
+        <h1>Welcome, <span id="hod"><i>Dr. Dolapo Adejare Balogun</i></span></h1>
         <div class="student-div">
             <h2><u>Pending(<span id="num"></span>)</u></h2>
             <div class="student-section">
@@ -139,7 +139,7 @@ mysqli_close($conn);
                 const studentId = box.id;
                 console.log(studentId);
                 
-                window.location.href = `collegeDeanPage.php?id=${studentId}`;
+                window.location.href = `subDeanPage.php?id=${studentId}`;
             });
         })
 
