@@ -8,6 +8,7 @@ $matricNo = isset($_GET['id']) ? $_GET['id'] : '';
 echo $matricNo;
 // Check if matricNo is not empty
 
+
 ?>
 
 <!DOCTYPE html>
